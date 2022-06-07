@@ -66,12 +66,12 @@ class PokemonRepository extends ServiceEntityRepository
         // executem la peticio cURL
         $crudeResponse = $client->request('GET', $this->baseUrl . '/pokemon/' . $name);
 
-        $row = json_decode($crudeResponse->getContent());
+        $jsonPokemon = json_decode($crudeResponse->getContent());
         $pokemon = new Pokemon();
        // foreach ($resposta as $row) {
-            if($row){
-                $pokemon->setId($row->id);
-                $pokemon->setName($row->name);
+            if($jsonPokemon){
+                $pokemon->setId($jsonPokemon->id);
+                $pokemon->setName($jsonPokemon->name);
                 if(count($jsonPokemon->types) == 1){
                     $pokemon->setType(
                         array(
@@ -86,10 +86,13 @@ class PokemonRepository extends ServiceEntityRepository
                         )
                     );
                 }
-                $pokemon->setSprite($row->sprites->front_default);
+                $pokemon->setSprite($jsonPokemon->sprites->front_default);
+
+                $crudeResponse = $client->request('GET', $this->baseUrl . '/pokemon-species/' . $name);
+                $description = json_decode($crudeResponse->getContent());
+                $pokemon->setDescription($description->flavor_text_entries[0]->flavor_text);
             }
         //}
-        curl_close($curl);
         return $pokemon;
     }
 }

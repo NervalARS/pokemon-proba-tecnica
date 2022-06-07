@@ -15,6 +15,8 @@ class Pokemon
 
     private $numberOfVotes;
 
+    private $description;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -71,6 +73,18 @@ class Pokemon
     public function setNumberOfVotes(int $numberOfVotes): self
     {
         $this->numberOfVotes = $numberOfVotes;
+
+        return $this;
+    }
+
+    public function getdescritpion(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setdescription(string $description): self
+    {
+        $this->description = $description;
 
         return $this;
     }
