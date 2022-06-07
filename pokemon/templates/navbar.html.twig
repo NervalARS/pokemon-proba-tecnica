@@ -1,0 +1,16 @@
+<nav class="navbar navbar-expand-md text-light navbar-dark bg-dark justify-content-between">
+      <a href="{{ path('home') }}" class="navbar-brand" style="padding-left: 20px">
+      PokeApi
+      </a>
+        <ul class="navbar-nav ml-auto" style="padding-right: 20px">
+          {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+          Hello {{ app.user.username }}
+          &nbsp;&nbsp;&nbsp;
+          <li class="nav-item"><a class="btn btn-outline-danger ml-md-2 btn-light text-dark" href="{{ path('app_logout') }}">Logout</a></li>
+          {% else %}
+            <li class="nav-item"> <a class="btn btn-outline-success ml-md-2 btn-light text-dark" href="{{ path('login') }}">Login</a> </li>
+            &nbsp;&nbsp;&nbsp;
+            <li class="nav-item"> <a class="btn btn-outline-success ml-md-2 btn-light text-dark" href="{{ path('app_register') }}">Register</a> </li>
+          {% endif %}
+        </ul>
+</nav>
